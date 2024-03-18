@@ -1,0 +1,50 @@
+QMainWindow{
+background: #252525;
+}
+QLabel{
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 200;
+        font-size: 24px;
+        font-color: #252525;
+        border-radius: 15px;
+        margin-bottom: 10px;
+        background: #A4C6D9;
+        }
+QListWidget{
+        background: #A4C6D9;
+        border-radius: 25px;
+        font-family: 'Inter-regular';
+        font-style: normal;
+        font-weight: 50;
+        font-size: 20px;
+        font-color: #A4C6D9;
+        }
+
+QScrollBar:vertical{
+        background-color:transparent;
+        border-color: transparent;
+        }
+
+QScrollBar::handle:vertical{
+        margin: 4px;
+        margin-left: 0;
+        border-radius: 5px;
+        width: 5px;
+        background: #252525;
+}
+
+QScrollArea::corner{background-color:transparent;}
+
+
+QListWidget:item{
+        background: #252525;
+        border-radius: 25px;
+        font-size: 18;
+        color: #A4C6D9;
+        height: 112;
+        width: 112;
+        margin: 15px;
+        margin-right: 0;
+        margin-bottom: 0px;
+        }

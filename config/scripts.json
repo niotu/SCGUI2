@@ -1,0 +1,24 @@
+{
+  "parsers": {
+    "агата": "agata",
+    "арго": "argo",
+    "эталина": "etalina",
+    "фиорита": "fiorita",
+    "гинда": "guinda",
+    "жанели": "janelli",
+    "джети": "jetty",
+    "куртки": "kurtki",
+    "лкрафт": "lcraft",
+    "сумкистиль": "sumki-style",
+    "раш": "/home/vint/workspace/rash.su/rashParser.py",
+    "синийлен": "/home/vint/workspace/siniylen.ru/siniylen.py",
+    "клевермедиа": "/home/vint/workspace/clever-media/clever-media.py"
+  },
+  "on_file": {
+    "аллабуена": "/home/vint/workspace/allabuena/allabuena.py %f"
+  },
+  "on_dir": {
+    "эйс": "/home/vint/workspace2/ScriptGUI/difficult/do_ace.sh",
+    "фансимода": "/home/vint/workspace2/ScriptGUI/difficult/fancy.sh"
+  }
+}
