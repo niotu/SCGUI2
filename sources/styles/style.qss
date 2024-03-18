@@ -1,6 +1,4 @@
-QMainWindow{
-background: #252525;
-}
+
 QLabel{
         font-family: 'Inter';
         font-style: normal;
@@ -46,5 +44,6 @@ QListWidget:item{
         width: 112;
         margin: 15px;
         margin-right: 0;
+        padding-top: 10;
         margin-bottom: 0px;
         }

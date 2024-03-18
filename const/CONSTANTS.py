@@ -8,7 +8,7 @@ SPACING = 0
 MAIN_ICON_ROOT = ""
 COMMON_ICON_ROOT = "icons/common.png"
 LOADING_ICON_ROOT = "icons/loading.png"
-ERROR_ICON_ROOT = "icons/broken.png"
+ERROR_ICON_ROOT = "icons/error.png"
 DONE_ICON_ROOT = "icons/done.png"
 
 ALFA = {
