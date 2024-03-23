@@ -2,9 +2,8 @@
 
 import sys
 
-from PyQt5 import QtCore
-from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import QApplication, QSizePolicy
+from PySide6.QtGui import QIcon
+from PySide6.QtWidgets import QApplication
 from const.CONSTANTS import OP_SYSTEM
 from sources.mainWindow import MainWindow
 

@@ -1,9 +1,9 @@
 import sys
 
 import json
-from PyQt5.QtCore import Qt, QProcess, QSize
-from PyQt5.QtGui import QFont, QIcon
-from PyQt5.QtWidgets import QWidget, QMainWindow, QListWidgetItem, QFileDialog, QScrollBar
+from PySide6.QtCore import Qt, QProcess, QSize
+from PySide6.QtGui import QFont, QIcon
+from PySide6.QtWidgets import QWidget, QMainWindow, QListWidgetItem, QFileDialog, QScrollBar
 
 from const.CONSTANTS import *
 from sources.MainWindowUI import Ui_MainWindow
@@ -79,7 +79,7 @@ class MainWindow(Ui_MainWindow):
 
             font = QFont('Inter')
             font.setKerning(True)
-            font.setWeight(20)
+            # font.setWeight(20)
 
             item.setFont(font)
 
@@ -110,7 +110,7 @@ class MainWindow(Ui_MainWindow):
         title = item.text()
         item.setIcon(self.loading_icon)
         print("* clicked - on_parser", title)
-        self.start_parser(title)
+        self.start_parser(item)
 
     def clicked_on_file(self, item):
         title = item.text()
@@ -121,10 +121,12 @@ class MainWindow(Ui_MainWindow):
     def start_on_file(self, name):
         print("* started - on_file", name)
 
-    def start_on_dir(self, name):
+    def start_on_dir(self, item):
+        name = item.text()
         print("* started - on_dir", name)
 
-    def start_parser(self, name):
+    def start_parser(self, item):
+        name = item.text()
         exec_path = self.parsers[name]
         working_dir = "/".join(exec_path.split("/")[:-1])
         process_name = translate(name)
@@ -134,15 +136,22 @@ class MainWindow(Ui_MainWindow):
 
         process = QProcess(self)
         task.process = process
+        task.owner = item
 
         process.setWorkingDirectory(working_dir)
         process.setObjectName(process_name)
-        process.errorOccurred.connect(lambda: self.end_process(process, is_error=True))
-        process.finished.connect(lambda: self.end_process(process))
+        process.errorOccurred.connect(lambda: self.end_process(task, is_error=True))
+        process.finished.connect(lambda: self.end_process(task))
 
         process.start(exec_path)
 
-    def end_process(self, process, is_error=False):
-        if is_error:
-            print(f"* ERROR!!! error[{process.errorString()}]")
+    def end_process(self, task, is_error=False):
+        process = task.process
         print("is_error:", is_error)
+        if is_error:
+            task.owner.setIcon(self.error_icon)
+            print(f"* ERROR!!! error[{process.errorString()}]")
+            return
+        task.owner.setIcon(self.done_icon)
+        print(f"* Done!!! {process.objectName()}")
+
