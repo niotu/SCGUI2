@@ -125,11 +125,11 @@ class MainWindow(Ui_MainWindow):
         print("* started - on_dir", name)
 
     def start_parser(self, name):
-        print("* started - on_parser", name)
         exec_path = self.parsers[name]
-        working_dir = "/" + exec_path
+        working_dir = "/".join(exec_path.split("/")[:-1])
         process_name = translate(name)
         task = Task()
+        print(f"* started - on_parser | name=[{name}], path=[{exec_path}], dir=[{working_dir}]")
         self.tasks.append(task)
 
         process = QProcess(self)
@@ -143,4 +143,6 @@ class MainWindow(Ui_MainWindow):
         process.start(exec_path)
 
     def end_process(self, process, is_error=False):
+        if is_error:
+            print(f"* ERROR!!! error[{process.errorString()}]")
         print("is_error:", is_error)
