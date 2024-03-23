@@ -51,7 +51,7 @@ class MainWindow(Ui_MainWindow):
 
         self.label_3.setAlignment(Qt.AlignCenter)
 
-        f = open("config/linux_paths.json", encoding="utf-8").read()
+        f = open(CONFIGURE, encoding="utf-8").read()
 
         self.scripts = json.loads(f)
         self.parsers = self.scripts["parsers"]
@@ -103,23 +103,29 @@ class MainWindow(Ui_MainWindow):
     def clicked_on_dir(self, item: QListWidgetItem):
         title = item.text()
         item.setIcon(self.loading_icon)
-        print("on_dir", title)
+        print("* clicked - on_dir", title)
+        self.start_on_dir(title)
 
     def clicked_on_parser(self, item):
+        title = item.text()
         item.setIcon(self.loading_icon)
-        print("on_parser", item.text())
+        print("* clicked - on_parser", title)
+        self.start_parser(title)
 
     def clicked_on_file(self, item):
+        title = item.text()
         item.setIcon(self.loading_icon)
-        print("on_file", item.text())
+        print("* clicked - on_file", title)
+        self.start_on_file(title)
 
     def start_on_file(self, name):
-        pass
+        print("* started - on_file", name)
 
     def start_on_dir(self, name):
-        pass
+        print("* started - on_dir", name)
 
     def start_parser(self, name):
+        print("* started - on_parser", name)
         exec_path = self.parsers[name]
         working_dir = "/" + exec_path
         process_name = translate(name)

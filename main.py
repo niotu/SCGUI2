@@ -3,7 +3,7 @@
 import sys
 
 from PyQt5.QtWidgets import QApplication, QSizePolicy
-
+from const.CONSTANTS import OP_SYSTEM
 from sources.mainWindow import MainWindow
 
 
@@ -40,5 +40,6 @@ def cleanup():
 if __name__ == "__main__":
     cleanup()
     print("Starting...")
+    print(f"* OPERATING SYSTEM: {OP_SYSTEM}")
     main()
     print("Closing")

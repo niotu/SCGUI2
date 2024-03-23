@@ -1,5 +1,15 @@
 """STYLES"""
 
+import platform
+
+CONFIGURE = ''
+
+OP_SYSTEM = platform.system()
+if OP_SYSTEM == "Windows":
+    CONFIGURE = "config/win_paths.json"
+elif OP_SYSTEM == "Linux":
+    CONFIGURE = "config/linux_paths.json"
+
 BG_COLOR = "252525"
 ACCENT_COLOR = "A4C6D9"
 STYLES_ROOT = "sources/styles/style.qss"
