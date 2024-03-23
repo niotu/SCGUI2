@@ -2,6 +2,8 @@
 
 import sys
 
+from PyQt5 import QtCore
+from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QApplication, QSizePolicy
 from const.CONSTANTS import OP_SYSTEM
 from sources.mainWindow import MainWindow
@@ -15,7 +17,7 @@ def main():
     app = QApplication(sys.argv)
     application = MainWindow()
     application.setWindowTitle('SC-GUI')
-    # application.setWindowIcon(QIcon('icons/logo.png'))
+    application.setWindowIcon(QIcon('icons/logo/logo.svg'))
     # application.setWindowFlag(QtCore.Qt.FramelessWindowHint)
     application.show()
     # application.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
