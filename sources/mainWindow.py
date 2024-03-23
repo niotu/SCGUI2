@@ -57,6 +57,7 @@ class MainWindow(Ui_MainWindow):
         self.parsers = self.scripts["parsers"]
         self.on_file = self.scripts["on_file"]
         self.on_dir = self.scripts["on_dir"]
+        self.python = self.scripts["programs"]["python"]
 
         print(self.parsers, self.on_dir, self.on_file)
 
@@ -128,7 +129,10 @@ class MainWindow(Ui_MainWindow):
     def start_parser(self, item):
         name = item.text()
         exec_path = self.parsers[name]
-        working_dir = "/".join(exec_path.split("/")[:-1])
+        working_dir = SEPARATOR.join(exec_path.split(SEPARATOR)[:-1])
+        lang = exec_path.split(".")[-1]
+        if lang == "py":
+            exec_path = self.python + " \"" + exec_path + "\""
         process_name = translate(name)
         task = Task()
         print(f"* started - on_parser | name=[{name}], path=[{exec_path}], dir=[{working_dir}]")
@@ -143,15 +147,18 @@ class MainWindow(Ui_MainWindow):
         process.errorOccurred.connect(lambda: self.end_process(task, is_error=True))
         process.finished.connect(lambda: self.end_process(task))
 
+        # process.readyReadStandardError.connect(lambda: self.readerror(process))
+
         process.start(exec_path)
 
     def end_process(self, task, is_error=False):
+        task.owner.setCheckState(1)
         process = task.process
         print("is_error:", is_error)
-        if is_error:
+        if process.state() == 0 and not is_error:
+            task.owner.setIcon(self.done_icon)
+            print(f"* DONE !!! {process.objectName()}")
+            return
+        else:
             task.owner.setIcon(self.error_icon)
             print(f"* ERROR!!! error[{process.errorString()}]")
-            return
-        task.owner.setIcon(self.done_icon)
-        print(f"* Done!!! {process.objectName()}")
-

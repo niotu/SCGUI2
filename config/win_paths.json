@@ -9,10 +9,10 @@
     "джети": "jetty",
     "куртки": "kurtki",
     "лкрафт": "lcraft",
-    "сумкистиль": "sumki-style",
+    "сумкистиль": "C:\\Users\\ni0tu\\PycharmProjects\\site-grabbers\\sumka-style.ru\\sumka-style.ru.py",
     "раш": "/home/vint/workspace/rash.su/rashParser.py",
     "синийлен": "/home/vint/workspace/siniylen.ru/siniylen.py",
-    "клевермедиа": "/home/vint/workspace/clever-media/clever-media.py"
+    "клевермедиа": "C:\\Users\\ni0tu\\PycharmProjects\\site-grabbers\\clever-media\\clever-media.py"
   },
   "on_file": {
     "аллабуена": "/home/vint/workspace/allabuena/allabuena.py %f"
@@ -20,5 +20,8 @@
   "on_dir": {
     "эйс": "/home/vint/workspace2/ScriptGUI/difficult/do_ace.sh",
     "фансимода": "/home/vint/workspace2/ScriptGUI/difficult/fancy.sh"
+  },
+  "programs": {
+    "python": "C:\\Users\\ni0tu\\AppData\\Local\\Microsoft\\WindowsApps\\python.exe"
   }
 }

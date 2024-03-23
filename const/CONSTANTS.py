@@ -7,8 +7,10 @@ CONFIGURE = ''
 OP_SYSTEM = platform.system()
 if OP_SYSTEM == "Windows":
     CONFIGURE = "config/win_paths.json"
+    SEPARATOR = "\\"
 elif OP_SYSTEM == "Linux":
     CONFIGURE = "config/linux_paths.json"
+    SEPARATOR = "/"
 
 BG_COLOR = "252525"
 ACCENT_COLOR = "A4C6D9"
