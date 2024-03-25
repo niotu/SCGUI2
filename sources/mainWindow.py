@@ -1,22 +1,28 @@
 import sys
 
 import json
+
 from PySide6.QtCore import Qt, QProcess, QSize
 from PySide6.QtGui import QFont, QIcon
-from PySide6.QtWidgets import QWidget, QMainWindow, QListWidgetItem, QFileDialog, QScrollBar
+from PySide6.QtWidgets import QWidget, QMainWindow, QListWidgetItem, QFileDialog, QScrollBar, QToolTip
 
 from const.CONSTANTS import *
 from sources.MainWindowUI import Ui_MainWindow
+from sources.Logger import Logger
+
+logger = Logger()
 
 
 class Task:
     pass
 
-
 def translate(inp):
     res = ""
     for l in inp:
-        res += ALFA[l]
+        if l in RUSSIAN:
+            res += ALFA[l]
+        else:
+            res += l
     return res
 
 
@@ -29,6 +35,8 @@ class MainWindow(Ui_MainWindow):
         self.done_icon = QIcon(DONE_ICON_ROOT)
         self.tasks = []
 
+        # self.logger = Logger()
+
         self.setupUi(self)
 
         styles = open(STYLES_ROOT, encoding='utf-8').read()
@@ -36,9 +44,8 @@ class MainWindow(Ui_MainWindow):
         self.setStyleSheet(styles)
 
         self.listWidget.itemClicked.connect(self.clicked_on_parser)
-
         self.listWidget.setSpacing(SPACING)
-        # self.listWidget.
+
         self.listWidget_2.itemClicked.connect(self.clicked_on_file)
         self.listWidget_2.setSpacing(SPACING)
 
@@ -80,7 +87,6 @@ class MainWindow(Ui_MainWindow):
 
             font = QFont('Inter')
             font.setKerning(True)
-            # font.setWeight(20)
 
             item.setFont(font)
 
@@ -146,15 +152,17 @@ class MainWindow(Ui_MainWindow):
         process.setObjectName(process_name)
         process.errorOccurred.connect(lambda: self.end_process(task, is_error=True))
         process.finished.connect(lambda: self.end_process(task))
+        process.readyRead.connect(lambda: self.readout(process))
 
-        # process.readyReadStandardError.connect(lambda: self.readerror(process))
+        process.readyReadStandardError.connect(lambda: self.readerror(process))
 
         process.start(exec_path)
 
     def end_process(self, task, is_error=False):
-        task.owner.setCheckState(1)
         process = task.process
         print("is_error:", is_error)
+        logname = translate(process.objectName().lower().rstrip())
+        logger.write(logname, process.readAll())
         if process.state() == 0 and not is_error:
             task.owner.setIcon(self.done_icon)
             print(f"* DONE !!! {process.objectName()}")
@@ -162,3 +170,20 @@ class MainWindow(Ui_MainWindow):
         else:
             task.owner.setIcon(self.error_icon)
             print(f"* ERROR!!! error[{process.errorString()}]")
+
+    def readout(self, process):
+        name = process.objectName()
+        logname = translate(name.lower().replace('\n', ''))
+        info = process.readAll()
+        if not info:
+            return
+        print(name, info)
+        logger.write(logname, info)
+
+    def readerror(self, process):
+        name = process.objectName()
+        logname = translate(name.lower().replace('\n', ''))
+
+        err = process.readAllStandardError()
+        print(f"called readerror name[{name}], err[{err}]")
+        logger.write(logname, err)
