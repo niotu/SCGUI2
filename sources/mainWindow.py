@@ -7,13 +7,14 @@ from PySide6.QtWidgets import QListWidgetItem
 from const.CONSTANTS import *
 from sources.pyui.MainWindowUI import Ui_MainWindow
 from sources.Logger import Logger
-from sources.pyui.logsWindowUI import Ui_Dialog
+from sources.logsWindow import LogsWindow
 
 logger = Logger()
 
 
 class Task:
     pass
+
 
 def translate(inp):
     res = ""
@@ -35,12 +36,10 @@ class MainWindow(Ui_MainWindow):
         self.settings_icon = QIcon(SETTINGS_ICON_ROOT)
         self.update_icon = QIcon(UPDATE_ICON_ROOT)
         self.tasks = []
-        self.logsWindow = Ui_Dialog()
-
-        # self.logger = Logger()
+        self.logsWindow = LogsWindow()
 
         self.setupUi(self)
-        self.logsWindow.setupUi(self.logsWindow)
+        # self.logger = Logger()
 
         styles = open(STYLES_ROOT, encoding='utf-8').read()
         self.settingsButton = QListWidgetItem(self.listWidget_4)
@@ -129,8 +128,8 @@ class MainWindow(Ui_MainWindow):
 
     def settings_clicked(self, item: QListWidgetItem):
         print("* clicked - settings, called function")
+        self.logsWindow.refresh()
         self.logsWindow.show()
-
 
     def clicked_on_dir(self, item: QListWidgetItem):
         title = item.text()
@@ -194,6 +193,8 @@ class MainWindow(Ui_MainWindow):
             return
         else:
             task.owner.setIcon(self.error_icon)
+            filepath = f'logs{SEPARATOR}{logname}_logs.log'
+            self.logsWindow.appendLog(logname, filepath)
             print(f"* ERROR!!! error[{process.errorString()}]")
 
     def readout(self, process):

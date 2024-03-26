@@ -17,11 +17,3 @@ class Logger:
         with open(filepath, mode) as f:
             f.write(bytes(info))
 
-    def read(self, name):
-        filepath = f'logs{SEPARATOR}{name}_logs.log'
-        with open(filepath, 'r') as f:
-            try:
-                lines = f.readlines()
-            except io.UnsupportedOperation:
-                lines = f.readlines()
-        return lines
