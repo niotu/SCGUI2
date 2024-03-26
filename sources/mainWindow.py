@@ -33,6 +33,8 @@ class MainWindow(Ui_MainWindow):
         self.loading_icon = QIcon(LOADING_ICON_ROOT)
         self.error_icon = QIcon(ERROR_ICON_ROOT)
         self.done_icon = QIcon(DONE_ICON_ROOT)
+        self.settings_icon = QIcon(SETTINGS_ICON_ROOT)
+        self.update_icon = QIcon(UPDATE_ICON_ROOT)
         self.tasks = []
 
         # self.logger = Logger()
@@ -40,6 +42,18 @@ class MainWindow(Ui_MainWindow):
         self.setupUi(self)
 
         styles = open(STYLES_ROOT, encoding='utf-8').read()
+        self.settingsButton = QListWidgetItem(self.listWidget_4)
+        self.settingsButton.setTextAlignment(Qt.AlignCenter)
+        self.settingsButton.setIcon(self.settings_icon)
+        self.settingsButton.setText("Settings")
+
+        self.updateButton = QListWidgetItem(self.listWidget_4)
+        self.updateButton.setTextAlignment(Qt.AlignCenter)
+        self.updateButton.setIcon(self.update_icon)
+        self.updateButton.setText("Update")
+
+        self.listWidget_4.setIconSize(QSize(28, 28))
+        self.listWidget_4.itemClicked.connect(self.tool_bar_clicked)
 
         self.setStyleSheet(styles)
 
@@ -106,6 +120,15 @@ class MainWindow(Ui_MainWindow):
             item.setIcon(self.default_icon)
 
             self.listWidget_3.addItem(item)
+
+    def tool_bar_clicked(self, item: QListWidgetItem):
+        title = item.text()
+        print(f"* clicked - {title}")
+        self.settings_clicked(item)
+
+    def settings_clicked(self, item: QListWidgetItem):
+
+        print("* clicked - settings, called function")
 
     def clicked_on_dir(self, item: QListWidgetItem):
         title = item.text()

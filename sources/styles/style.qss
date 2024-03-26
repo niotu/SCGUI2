@@ -1,4 +1,4 @@
-QLabel{
+QLabel {
         font-family: 'Inter';
         font-style: normal;
         font-weight: 200;
@@ -37,12 +37,30 @@ QScrollArea::corner{background-color:transparent;}
 QListWidget:item{
         background: #252525;
         border-radius: 25px;
-        font-size: 18;
+        font-size: 18px;
         color: #A4C6D9;
-        height: 110;
-        width: 110;
+        height: 110px;
+        width: 110px;
         margin: 15px;
         margin-right: 0;
-        padding-top: 10;
+        padding-top: 10px;
         margin-bottom: 0px;
         }
+
+QListWidget#listWidget_4{
+        background: #A4C6D9;
+        border-radius: 20px;
+        font-family: 'Inter-regular';
+        font-style: normal;
+        font-weight: 50;
+        font-size: 20px;
+        font-color: #A4C6D9;
+}
+
+QListWidget#listWidget_4:item{
+        background: #252525;
+        border-radius: 17px;
+        height: 33px;
+        width: 33px;
+        margin: 3px;
+}

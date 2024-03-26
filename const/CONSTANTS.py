@@ -18,10 +18,12 @@ STYLES_ROOT = "sources/styles/style.qss"
 
 SPACING = 0
 MAIN_ICON_ROOT = ""
-COMMON_ICON_ROOT = "icons/common.png"
-LOADING_ICON_ROOT = "icons/loading.png"
-ERROR_ICON_ROOT = "icons/error.png"
-DONE_ICON_ROOT = "icons/done.png"
+COMMON_ICON_ROOT = "icons/states/common.png"
+LOADING_ICON_ROOT = "icons/states/loading.png"
+ERROR_ICON_ROOT = "icons/states/error.png"
+DONE_ICON_ROOT = "icons/states/done.png"
+SETTINGS_ICON_ROOT = "icons/buttons/settings.png"
+UPDATE_ICON_ROOT = "icons/buttons/update.png"
 
 ALFA = {
     'а': 'a',
