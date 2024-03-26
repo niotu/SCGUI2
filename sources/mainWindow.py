@@ -1,8 +1,9 @@
 import json
+import os.path
 
 from PySide6.QtCore import Qt, QProcess, QSize
 from PySide6.QtGui import QFont, QIcon
-from PySide6.QtWidgets import QListWidgetItem
+from PySide6.QtWidgets import QListWidgetItem, QFileDialog
 
 from const.CONSTANTS import *
 from sources.pyui.MainWindowUI import Ui_MainWindow
@@ -124,9 +125,15 @@ class MainWindow(Ui_MainWindow):
     def tool_bar_clicked(self, item: QListWidgetItem):
         title = item.text()
         print(f"* clicked - {title}")
-        self.settings_clicked(item)
+        if title == "Settings":
+            self.settings_clicked()
+        if title == "Update":
+            self.update_clicked()
 
-    def settings_clicked(self, item: QListWidgetItem):
+    def update_clicked(self):
+        print("* clicked - update, called function")
+
+    def settings_clicked(self):
         print("* clicked - settings, called function")
         self.logsWindow.refresh()
         self.logsWindow.show()
@@ -135,7 +142,7 @@ class MainWindow(Ui_MainWindow):
         title = item.text()
         item.setIcon(self.loading_icon)
         print("* clicked - on_dir", title)
-        self.start_on_dir(title)
+        self.start_on_dir(item)
 
     def clicked_on_parser(self, item):
         title = item.text()
@@ -147,14 +154,41 @@ class MainWindow(Ui_MainWindow):
         title = item.text()
         item.setIcon(self.loading_icon)
         print("* clicked - on_file", title)
-        self.start_on_file(title)
-
-    def start_on_file(self, name):
-        print("* started - on_file", name)
+        self.start_on_file(item)
 
     def start_on_dir(self, item):
         name = item.text()
         print("* started - on_dir", name)
+        exec_path = self.on_dir[name]
+
+    def start_on_file(self, item):
+        name = item.text()
+        print("* started - on_file", name)
+        exec_path = self.on_file[name]
+
+        dial = QFileDialog.getOpenFileName(None, "Choose file")
+        print(dial)
+        exec_path = f"{self.python} {exec_path} \"{dial[0]}\""
+        working_dir = os.path.dirname(dial[0])
+
+        task = Task()
+        self.tasks.append(task)
+
+        print(f"* execute:[{exec_path}] working in[{working_dir}]")
+
+        process = QProcess(self)
+        task.process = process
+        task.owner = item
+
+        process.setWorkingDirectory(working_dir)
+        process.setObjectName(name)
+        process.errorOccurred.connect(lambda: self.end_process(task, True))
+        process.finished.connect(lambda: self.end_process(task))
+        process.readyRead.connect(lambda: self.readout(process))
+
+        process.readyReadStandardError.connect(lambda: self.readerror(process))
+
+        process.start(exec_path)
 
     def start_parser(self, item):
         name = item.text()
