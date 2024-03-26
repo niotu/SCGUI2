@@ -1,14 +1,13 @@
-import sys
-
 import json
 
 from PySide6.QtCore import Qt, QProcess, QSize
 from PySide6.QtGui import QFont, QIcon
-from PySide6.QtWidgets import QWidget, QMainWindow, QListWidgetItem, QFileDialog, QScrollBar, QToolTip
+from PySide6.QtWidgets import QListWidgetItem
 
 from const.CONSTANTS import *
-from sources.MainWindowUI import Ui_MainWindow
+from sources.pyui.MainWindowUI import Ui_MainWindow
 from sources.Logger import Logger
+from sources.pyui.logsWindowUI import Ui_Dialog
 
 logger = Logger()
 
@@ -36,10 +35,12 @@ class MainWindow(Ui_MainWindow):
         self.settings_icon = QIcon(SETTINGS_ICON_ROOT)
         self.update_icon = QIcon(UPDATE_ICON_ROOT)
         self.tasks = []
+        self.logsWindow = Ui_Dialog()
 
         # self.logger = Logger()
 
         self.setupUi(self)
+        self.logsWindow.setupUi(self.logsWindow)
 
         styles = open(STYLES_ROOT, encoding='utf-8').read()
         self.settingsButton = QListWidgetItem(self.listWidget_4)
@@ -127,8 +128,9 @@ class MainWindow(Ui_MainWindow):
         self.settings_clicked(item)
 
     def settings_clicked(self, item: QListWidgetItem):
-
         print("* clicked - settings, called function")
+        self.logsWindow.show()
+
 
     def clicked_on_dir(self, item: QListWidgetItem):
         title = item.text()
