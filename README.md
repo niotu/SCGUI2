@@ -1,6 +1,8 @@
 # SCGUI2
 
-A new version of ScriptGUI with a few changes s
+A new version of ScriptGUI with a few changes
+
+in development...
 
 <img src="icons/logo/logo.png" alt="logo">
 
