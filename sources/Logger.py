@@ -11,7 +11,6 @@ class Logger:
         if name == 'errors_QT':
             mode = 'a'
             info += '\n'
-        print("calling write")
 
         filepath = f'logs{SEPARATOR}{name}_logs.log'
         with open(filepath, mode) as f:
