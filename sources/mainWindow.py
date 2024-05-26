@@ -163,6 +163,30 @@ class MainWindow(Ui_MainWindow):
         print("* started - on_dir", name)
         exec_path = self.on_dir[name]
 
+        dial = QFileDialog.getOpenFileName(None, "Choose folder")
+        print(dial)
+        exec_path = f"{self.python} {exec_path} \"{dial[0]}\""
+        working_dir = os.path.dirname(dial[0])
+
+        task = Task()
+        self.tasks.append(task)
+
+        print(f"* execute:[{exec_path}] working in[{working_dir}]")
+
+        process = QProcess(self)
+        task.process = process
+        task.owner = item
+
+        process.setWorkingDirectory(working_dir)
+        process.setObjectName(name)
+        process.errorOccurred.connect(lambda: self.end_process(task, True))
+        process.finished.connect(lambda: self.end_process(task))
+        process.readyRead.connect(lambda: self.readout(process))
+
+        process.readyReadStandardError.connect(lambda: self.readerror(process))
+
+        process.start(exec_path)
+
     def start_on_file(self, item):
         name = item.text()
         print("* started - on_file", name)
